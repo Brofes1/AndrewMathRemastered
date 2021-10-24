@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AndrewMathRemastered
 {
@@ -9,8 +10,8 @@ namespace AndrewMathRemastered
             Random random = new Random();
             int a, b, c, e = 0, h = 0;
             int dump;
-            string[] responses = new string[5];
-            responses = new string[] { "test1", "test2", "test3", "test4", "test5", "test6"};
+            List<string> responses = new List<string>();
+
             a = random.Next(1, 50);
             b = random.Next(1, 50);
             c = a + b;
@@ -27,12 +28,13 @@ namespace AndrewMathRemastered
                     }
                     else
                     {
+                        responses.Add(dump + "");
+                        d++;
+                        e++;
                         Console.Clear();
                         Console.WriteLine("You got it wrong. Try again.");
                         getResponses();
                         Console.Write("Response: ");
-                        d++;
-                        e++;
                     }
                 else
                 {
@@ -53,7 +55,7 @@ namespace AndrewMathRemastered
                 Console.WriteLine("What is {0} + {1}", a, b);
                 Console.WriteLine("________________________________");
                 Console.WriteLine("Responses:");
-                for (int f = 0; f <= e - 1;)
+                for (int f = 0; f < responses.Count;)
                 {
                     Console.WriteLine("     " + responses[f]);
                     f++;
