@@ -187,8 +187,8 @@ namespace AndrewMathRemastered
                             for (int z = 1; z <= questionsAmount; z++)
                             {
                                 subtraction(dump);
-                                dump = 2;
                             }
+                            dump = 2;
                         }
                     }
                 }
