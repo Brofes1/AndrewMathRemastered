@@ -14,15 +14,22 @@ namespace AndrewMathRemastered
             char correctsymbol;
             List<string> responses = new List<string>();
             List<string> questions = new List<string>();
-            void addition()
+            void domath(string type, int donegatives)
             {
                 correctsymbol = ' ';
                 responses.Clear();
                 a = random.Next(1, 50);
-                b = random.Next(1, 50);
-                c = a + b;
+                if (donegatives == 1 || type != "sub")
+                    b = random.Next(1, 50);
+                if (type == "sub" &&  donegatives == 0)
+                    while (b == 0 || b > a)
+                        b = random.Next(1, 50);
+                if (type == "add")
+                    c = a + b;
+                if (type == "sub")
+                    c = a - b;
 
-                getResponses(0, "addition");
+                getResponses(0, type);
                 for (int d = 0; d <= 5;)
                 {
                     if (int.TryParse(Console.ReadLine(), out dump))
@@ -33,7 +40,7 @@ namespace AndrewMathRemastered
                             Console.Clear();
                             Console.WriteLine("You got it correct!");
                             correctsymbol = '✓';
-                            getResponses(1, "addition");
+                            getResponses(1, type);
                             break;
                         }
                         else
@@ -43,18 +50,18 @@ namespace AndrewMathRemastered
                             e++;
                             Console.Clear();
                             Console.WriteLine("You got it wrong. Try again.");
-                            getResponses(0, "addition");
+                            getResponses(0, type);
                         }
                     else
                     {
                         Console.Clear();
-                        getResponses(0, "addition");
+                        getResponses(0, type);
                     }
                 }
                 if (e > 3)
                 {
                     Console.Clear();
-                    getResponses(-1, "addition");
+                    getResponses(-1, type);
                     Console.WriteLine("You got it wrong!");
                     Console.WriteLine("The correct response was: {0}", c);
                 }
@@ -64,72 +71,16 @@ namespace AndrewMathRemastered
                 Console.Clear();
                 questions.Add(correctsymbol + "     " + a + " + " + b + " = " + c);
             }
-            void subtraction(int negativesallowed)
-            {
-                correctsymbol = ' ';
-                responses.Clear();
-                a = random.Next(1, 50);
-                if (negativesallowed == 0)
-                {
-                    while (b == 0 || b > a)
-                    {
-                        b = random.Next(1, 50);
-                    }
-                }
-                else
-                    b = random.Next(1, 50);
-                c = a - b;
-
-                getResponses(0, "subtraction");
-                for (int d = 0; d <= 5; d++)
-                {
-                    if (int.TryParse(Console.ReadLine(), out dump))
-                        if (c == dump)
-                        {
-                            correct++;
-                            responses.Add(dump + "");
-                            Console.Clear();
-                            Console.WriteLine("You got it correct!");
-                            correctsymbol = '✓';
-                            getResponses(1, "subtraction");
-                            break;
-                        }
-                        else
-                        {
-                            responses.Add(dump + "");
-                            Console.Clear();
-                            Console.WriteLine("You got it wrong. Try again.");
-                            getResponses(0, "subtraction");
-                        }
-                    else
-                    {
-                        Console.Clear();
-                        getResponses(0, "subtraction");
-                    }
-                }
-                if (responses.Count > 3)
-                {
-                    Console.Clear();
-                    getResponses(-1, "subtraction");
-                    Console.WriteLine("You got it wrong!");
-                    Console.WriteLine("The correct response was: {0}", c);
-                }
-                Console.WriteLine("Press any key to continue to the next question.");
-                e = 0;
-                Console.ReadKey();
-                Console.Clear();
-                questions.Add(correctsymbol + "     " + a + " - " + b + " = " + c);
-            }
             void getResponses(int questionCorrect, string mathtype)
             {
-                if (mathtype == "addition")
+                if (mathtype == "add")
                 {
                     if (questionCorrect != 1)
                         Console.WriteLine("What is {0} + {1}", a, b);
                     if (questionCorrect == 1)
                         Console.WriteLine("{0} + {1} = {2}", a, b, c);
                 }
-                if (mathtype == "subtraction")
+                if (mathtype == "sub")
                 {
                     if (questionCorrect != 1)
                         Console.WriteLine("What is {0} - {1}", a, b);
@@ -172,7 +123,7 @@ namespace AndrewMathRemastered
                 {
                     for (int z = 1; z <= questionsAmount; z++)
                     {
-                        addition();
+                        domath("add", 0);
                     }
                     break;
                 }
@@ -186,9 +137,9 @@ namespace AndrewMathRemastered
                         {
                             for (int z = 1; z <= questionsAmount; z++)
                             {
-                                subtraction(dump);
-                                dump = 2;
+                                domath("sub", dump);
                             }
+                            dump = 2;
                         }
                     }
                 }
