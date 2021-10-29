@@ -138,8 +138,8 @@ namespace AndrewMathRemastered
                             for (int z = 1; z <= questionsAmount; z++)
                             {
                                 domath("sub", dump);
-                                dump = 2;
                             }
+                            dump = 2;
                         }
                     }
                 }
